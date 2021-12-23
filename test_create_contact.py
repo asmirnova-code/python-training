@@ -120,8 +120,23 @@ class TestCreateContact(unittest.TestCase):
                                 home_phone="8974567", mobile="789234567899", work_home="234567889", fax="76834657",
                                 email="email@somemail.com",
                                 email2="dfghj@mail.com", email3="fghjkk@mail.com", homepage="address.com",
-                                birthday="9", birthmonth="August", birthyear="1970",
+                                birthday="22", birthmonth="October", birthyear="1970",
                                 address2="one address", house_number="15", notes="some notes")
+        self.return_to_homepage(wd)
+        self.logout(wd)
+
+    def test_create_empty_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_new_contact_page(wd)
+        self.create_new_contact(wd, firstname="", middlename="", lastname="", nickname="",
+                                title="", company="", address="",
+                                home_phone="", mobile="", work_home="", fax="",
+                                email="",
+                                email2="", email3="", homepage="",
+                                birthday="", birthmonth="", birthyear="",
+                                address2="", house_number="", notes="")
         self.return_to_homepage(wd)
         self.logout(wd)
 
