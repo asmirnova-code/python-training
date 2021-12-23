@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+from contact import Contact
 
 class TestCreateContact(unittest.TestCase):
     def setUp(self):
@@ -29,79 +30,76 @@ class TestCreateContact(unittest.TestCase):
     def open_new_contact_page(self, wd):
         wd.find_element_by_link_text("add new").click()
 
-    def create_new_contact(self, wd, firstname, middlename, lastname, nickname, title, company, address, home_phone,
-                           mobile, work_home, fax, email, email2, email3, homepage, birthday, birthmonth, birthyear,
-                           address2, house_number, notes):
+    def create_new_contact(self, wd, contact):
         # fill first name
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(firstname)
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
         # fill middle name
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(middlename)
+        wd.find_element_by_name("middlename").send_keys(contact.middlename)
         # fill last name
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(lastname)
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
         # fill nickname
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(nickname)
+        wd.find_element_by_name("nickname").send_keys(contact.nickname)
         # fill title
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(title)
+        wd.find_element_by_name("title").send_keys(contact.title)
         # fill company
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(company)
+        wd.find_element_by_name("company").send_keys(contact.company)
         # fill address
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address)
+        wd.find_element_by_name("address").send_keys(contact.address)
         # fill home phone
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(home_phone)
+        wd.find_element_by_name("home").send_keys(contact.home_phone)
         # fill mobile phone
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(mobile)
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
         # fill work phone
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(work_home)
+        wd.find_element_by_name("work").send_keys(contact.work_phone)
         # fill fax
         wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys(fax)
+        wd.find_element_by_name("fax").send_keys(contact.fax)
         # fill email
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(email)
+        wd.find_element_by_name("email").send_keys(contact.email)
         # fill email2
         wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys(email2)
+        wd.find_element_by_name("email2").send_keys(contact.email2)
         # fill email3
         wd.find_element_by_name("email3").clear()
-        wd.find_element_by_name("email3").send_keys(email3)
+        wd.find_element_by_name("email3").send_keys(contact.email3)
         # fill homepage
         wd.find_element_by_name("homepage").clear()
-        wd.find_element_by_name("homepage").send_keys(homepage)
+        wd.find_element_by_name("homepage").send_keys(contact.homepage)
         # select birthday
         wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text(birthday)
-        wd.find_element_by_xpath("//option[@value='"+birthday+"']").click()
+        Select(wd.find_element_by_name("bday")).select_by_visible_text(contact.birthday)
+        wd.find_element_by_xpath("//option[@value='"+contact.birthday+"']").click()
         # select birth month
         wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(birthmonth)
-        wd.find_element_by_xpath("//option[@value='"+birthmonth+"']").click()
+        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.birthmonth)
+        wd.find_element_by_xpath("//option[@value='"+contact.birthmonth+"']").click()
         # fill birth year
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(birthyear)
-
+        wd.find_element_by_name("byear").send_keys(contact.birthyear)
         # fill address2
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(address2)
-        # fill house number
+        wd.find_element_by_name("address2").send_keys(contact.address2)
+        # fill home
         wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys(house_number)
+        wd.find_element_by_name("phone2").send_keys(contact.home)
         # fill notes
         wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys(notes)
+        wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def return_to_homepage(self, wd):
@@ -115,13 +113,13 @@ class TestCreateContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_new_contact_page(wd)
-        self.create_new_contact(wd, firstname="someone", middlename="dita", lastname="loren", nickname="pool",
+        self.create_new_contact(wd, Contact(firstname="someone", middlename="dita", lastname="loren", nickname="pool",
                                 title="research", company="cuberto", address="St. Petersburg",
-                                home_phone="8974567", mobile="789234567899", work_home="234567889", fax="76834657",
+                                home_phone="8974567", mobile="789234567899", work_phone="234567889", fax="76834657",
                                 email="email@somemail.com",
                                 email2="dfghj@mail.com", email3="fghjkk@mail.com", homepage="address.com",
-                                birthday="22", birthmonth="October", birthyear="1970",
-                                address2="one address", house_number="15", notes="some notes")
+                                birthday="2", birthmonth="November", birthyear="1970",
+                                address2="one address", home="15", notes="some notes"))
         self.return_to_homepage(wd)
         self.logout(wd)
 
@@ -130,13 +128,14 @@ class TestCreateContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_new_contact_page(wd)
-        self.create_new_contact(wd, firstname="", middlename="", lastname="", nickname="",
+        self.create_new_contact(wd, Contact(firstname="", middlename="", lastname="", nickname="",
                                 title="", company="", address="",
-                                home_phone="", mobile="", work_home="", fax="",
+                                home_phone="", mobile="", work_phone="", fax="",
                                 email="",
                                 email2="", email3="", homepage="",
                                 birthday="", birthmonth="-", birthyear="",
-                                address2="", house_number="", notes="")
+                                address2="", home="", notes=""))
+
         self.return_to_homepage(wd)
         self.logout(wd)
 
