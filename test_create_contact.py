@@ -15,19 +15,21 @@ class TestCreateContact(unittest.TestCase):
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
-    
-    def test_create_contact(self):
-        wd = self.wd
-        # open home page
+
+    def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/index.php")
-        # login
+
+    def login(self, wd):
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("secret")
         wd.find_element_by_xpath("//input[@value='Login']").click()
-        # open creating contact page
+
+    def open_new_contact_page(self, wd):
         wd.find_element_by_link_text("add new").click()
+
+    def create_new_contact(self, wd):
         # fill first name
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -108,11 +110,22 @@ class TestCreateContact(unittest.TestCase):
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("some notes")
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        # return to the homepage
+
+    def return_to_homepage(self, wd):
         wd.find_element_by_link_text("home page").click()
-        # logout
+
+    def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
-    
+
+    def test_create_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd)
+        self.open_new_contact_page(wd)
+        self.create_new_contact(wd)
+        self.return_to_homepage(wd)
+        self.logout(wd)
+
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
