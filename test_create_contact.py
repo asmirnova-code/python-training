@@ -82,11 +82,11 @@ class TestCreateContact(unittest.TestCase):
         # select birthday
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text(birthday)
-        wd.find_element_by_xpath("//option[@value='9']").click()
+        wd.find_element_by_xpath("//option[@value='"+birthday+"']").click()
         # select birth month
         wd.find_element_by_name("bmonth").click()
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text(birthmonth)
-        wd.find_element_by_xpath("//option[@value='August']").click()
+        wd.find_element_by_xpath("//option[@value='"+birthmonth+"']").click()
         # fill birth year
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
@@ -135,7 +135,7 @@ class TestCreateContact(unittest.TestCase):
                                 home_phone="", mobile="", work_home="", fax="",
                                 email="",
                                 email2="", email3="", homepage="",
-                                birthday="", birthmonth="", birthyear="",
+                                birthday="", birthmonth="none", birthyear="",
                                 address2="", house_number="", notes="")
         self.return_to_homepage(wd)
         self.logout(wd)
