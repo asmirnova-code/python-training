@@ -135,7 +135,7 @@ class TestCreateContact(unittest.TestCase):
                                 home_phone="", mobile="", work_home="", fax="",
                                 email="",
                                 email2="", email3="", homepage="",
-                                birthday="", birthmonth="none", birthyear="",
+                                birthday="", birthmonth="-", birthyear="",
                                 address2="", house_number="", notes="")
         self.return_to_homepage(wd)
         self.logout(wd)
