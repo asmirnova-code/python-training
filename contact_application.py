@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
-class Fixture:
+class ContactApplication:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
