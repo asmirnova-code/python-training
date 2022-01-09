@@ -2,7 +2,7 @@ from model.contact import Contact
 
 def test_edit_first_contact(app):
     app.session.login(username="admin", password="secret")
-    app.contact.edit_first_contact(Contact(firstname="edit", middlename="edit", lastname="edit", nickname="pool",
+    app.contact.edit_first_contact(Contact(firstname="edit2", middlename="edit", lastname="edit", nickname="pool",
                                title="research", company="cuberto", address="St. Petersburg",
                                home_phone="8974567", mobile="789234567899", work_phone="234567889", fax="76834657",
                                email="email@somemail.com",
