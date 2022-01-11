@@ -5,6 +5,10 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
+
     def open_new_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
@@ -104,3 +108,23 @@ class ContactHelper:
     def return_to_homepage(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+    def count_contact(self):
+        wd = self.app.wd
+        self.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def lastname(self):
+        wd = self.app.wd
+        self.select_first_contact()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        element = wd.find_element_by_name("lastname").get_attribute("value")
+        return len(element)
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+
+
+
