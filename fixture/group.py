@@ -34,6 +34,22 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def select_last_group(self):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[-1].click()
+
+    def modify_last_group(self, new_group_data):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_last_group()
+        # open modification form
+        wd.find_element_by_name("edit").click()
+        # fill group form
+        self.fill_group_form(new_group_data)
+        # submit modification
+        wd.find_element_by_name("update").click()
+        self.return_to_groups()
+
     def modify_first_group(self, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
@@ -69,3 +85,31 @@ class GroupHelper:
     def return_to_groups(self):
         wd = self.app.wd
         wd.find_element_by_link_text("group page").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def name(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_first_group()
+        wd.find_element_by_name("edit").click()
+        element = wd.find_element_by_name("group_name").get_attribute("value")
+        return len(element)
+
+    def header(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_first_group()
+        wd.find_element_by_name("edit").click()
+        element = wd.find_element_by_name("group_header").get_attribute("textContent")
+        return len(element)
+
+
+
+
+
+
+
