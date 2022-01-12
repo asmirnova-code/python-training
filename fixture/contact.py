@@ -84,7 +84,7 @@ class ContactHelper:
     def edit_first_contact(self, new_contact_data):
         # open home page
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
+        self.open_home_page()
         # select first contact
         wd.find_element_by_name("selected[]").click()
         # click edit button
@@ -98,7 +98,7 @@ class ContactHelper:
     def delete_first(self):
         # open home page
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
+        self.open_home_page()
         # select first contact
         wd.find_element_by_name("selected[]").click()
         # submit deletion
