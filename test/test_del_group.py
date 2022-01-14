@@ -7,6 +7,8 @@ def test_delete_first_group(app):
     app.group.delete_first_group()
     new_groups = app.group.get_group_list()
     assert len(old_groups) - 1 == len(new_groups)
+    old_groups[0:1] = []
+    assert old_groups == new_groups
 
 
 def test_delete_two_groups(app):
@@ -17,3 +19,5 @@ def test_delete_two_groups(app):
     app.group.delete_two_groups()
     new_groups = app.group.get_group_list()
     assert len(old_groups) - 2 == len(new_groups)
+    old_groups[0:2] = []
+    assert old_groups == new_groups
