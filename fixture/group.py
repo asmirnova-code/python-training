@@ -42,6 +42,15 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[-1].click()
 
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_two_groups(self):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]").click()
+
     def modify_last_group(self, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
@@ -56,9 +65,12 @@ class GroupHelper:
         self.group_cache = None
 
     def modify_first_group(self, new_group_data):
+        self.modify_group_by_index(0, new_group_data)
+
+    def modify_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # open modification form
         wd.find_element_by_name("edit").click()
         # fill group form
@@ -69,10 +81,12 @@ class GroupHelper:
         self.group_cache = None
 
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_groups_page()
-        # select first group
-        wd.find_element_by_name("selected[]").click()
+        self.select_group_by_index(index)
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups()
@@ -81,11 +95,7 @@ class GroupHelper:
     def delete_two_groups(self):
         wd = self.app.wd
         self.open_groups_page()
-        # select group 1
-        wd.find_element_by_name("selected[]").click()
-        # select group 2
-        wd.find_element_by_xpath("//div[@id='content']/form/span[2]/input").click()
-        # submit deletion
+        self.select_two_groups()
         wd.find_element_by_name("delete").click()
         self.return_to_groups()
         self.group_cache = None
@@ -127,6 +137,7 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
+
 
 
 
