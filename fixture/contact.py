@@ -156,8 +156,11 @@ class ContactHelper:
                 firstname = element.find_element_by_xpath(".//td[3]").text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 all_phones = element.find_element_by_xpath(".//td[6]").text
-                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id,
-                                                  all_phones_from_home_page=all_phones))
+                all_email = element.find_element_by_xpath(".//td[5]").text
+                address = element.find_element_by_xpath(".//td[4]").text
+                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id, address=address,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_email_from_home_page=all_email))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -178,8 +181,12 @@ class ContactHelper:
         firstname = wd.find_element_by_name("firstname").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, id=id, home_phone=home_phone, mobile=mobile,
-                       work_phone=work_phone, secondary_phone=secondary_phone)
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        address = wd.find_element_by_name("address").text
+        return Contact(firstname=firstname, lastname=lastname, id=id, address=address, home_phone=home_phone, mobile=mobile,
+                       work_phone=work_phone, secondary_phone=secondary_phone, email=email, email2=email2, email3=email3)
 
 
     def open_contact_view_page_by_index(self, index):
