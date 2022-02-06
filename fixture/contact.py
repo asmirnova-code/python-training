@@ -11,7 +11,7 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("/index.php") and
         len(wd.find_elements_by_xpath("//input[@value='Send e-Mail']"))) > 0:
-            wd.get("http://localhost/addressbook/index.php")
+            wd.get(self.app.base_url)
 
     def open_new_contact_page(self):
         wd = self.app.wd
