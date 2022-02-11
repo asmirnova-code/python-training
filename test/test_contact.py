@@ -3,6 +3,22 @@ from random import randrange
 import re
 
 
+def test_all_contacts(app, db):
+    if len(db.get_contact_list()) == 0:
+        app.contact.create(Contact(firstname="TestName", lastname="Test", address="St.Petersburg 15",
+                                   home_phone="8974567", mobile="789234567899",  work_phone="234567889", fax="76834657",
+                                   email="email@somemail.com", email2="dfghj@mail.com", email3="fghjkk@mail.com",
+                                   birthday="15", birthmonth="November", birthyear="1970", address2="one address",
+                                   secondary_phone="15", notes="some notes" ))
+    contacts_from_home_page = app.contact.get_contact_list()
+    def clean(contact):
+        return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip(),
+                       address=contact.address.strip(), address2=contact.address2.strip(), notes=contact.notes.strip())
+    db_contacts = map(clean, db.get_contact_list())
+    assert sorted(db_contacts, key=Contact.id_or_max) == sorted(contacts_from_home_page, key=Contact.id_or_max)
+
+
+
 def test_contact(app):
     if app.contact.count_contact() == 0:
         app.contact.create(Contact(firstname="TestName", lastname="Test", address="St.Petersburg 15",
