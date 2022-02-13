@@ -251,15 +251,15 @@ class ContactHelper:
 
     def assign_contact_by_id_to_group(self, id, groupId):
         wd = self.app.wd
-        wd.find_element_by_xpath("//input[@value='%s']" % id).click()
+        self.open_home_page()
+        self.select_contact_by_id(id)
         self.add_contact_to_group(groupId)
         self.return_to_homepage()
 
     def get_contacts_in_group(self, groupId):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("group").click()
-        Select(wd.find_element_by_name("group")).select_by_value('%s' % groupId)
+        self.select_group_from_groups_list(groupId)
         contacts_list = []
         for element in wd.find_elements_by_name("entry"):
             lastname = element.find_element_by_xpath(".//td[2]").text
@@ -273,11 +273,23 @@ class ContactHelper:
                                               all_email_from_home_page=all_email))
         return contacts_list
 
+    def delete_contact_from_group(self, id, groupId):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_group_from_groups_list(groupId)
+        self.select_contact_by_id(id)
+        wd.find_element_by_name("remove").click()
+        self.return_to_selected_group_page(groupId)
 
+    def return_to_selected_group_page(self, groupId):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_group_from_groups_list(groupId)
 
-
-
-
+    def select_group_from_groups_list(self, groupId):
+        wd = self.app.wd
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_value('%s' % groupId)
 
 
 
