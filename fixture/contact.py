@@ -242,6 +242,38 @@ class ContactHelper:
         return Contact(home_phone=home_phone, mobile=mobile, work_phone=work_phone,
                        secondary_phone=secondary_phone)
 
+    def add_contact_to_group(self, groupId):
+        wd = self.app.wd
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_name("to_group")).select_by_value('%s' % groupId)
+        wd.find_element_by_name("add").click()
+
+
+    def assign_contact_by_id_to_group(self, id, groupId):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//input[@value='%s']" % id).click()
+        self.add_contact_to_group(groupId)
+        self.return_to_homepage()
+
+    def get_contacts_in_group(self, groupId):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_value('%s' % groupId)
+        contacts_list = []
+        for element in wd.find_elements_by_name("entry"):
+            lastname = element.find_element_by_xpath(".//td[2]").text
+            firstname = element.find_element_by_xpath(".//td[3]").text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            all_phones = element.find_element_by_xpath(".//td[6]").text
+            all_email = element.find_element_by_xpath(".//td[5]").text
+            address = element.find_element_by_xpath(".//td[4]").text
+            contacts_list.append(Contact(lastname=lastname, firstname=firstname, id=id, address=address,
+                                              all_phones_from_home_page=all_phones,
+                                              all_email_from_home_page=all_email))
+        return contacts_list
+
+
 
 
 
